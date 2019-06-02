@@ -1,0 +1,77 @@
+<h1>רישום למחברת המתכונים</h1>
+<form id="accountForm" name="accountForm">
+    <!-- TODO change message div so the class will according to message (error or success). change id fro "err" to "msg" -->
+    <div id="err" class="alert alert-danger">{{loginMsg}}</div>
+    <!-- TODO: validation -->
+    <div class="form-group form-row">
+        <!-- validation: at least 3 characters -->
+        <label for="nickname" class="col-md-2">שם משתמש</label>
+        <input type="input" class="form-control col-md-5" name="nickname" ng-model="user.nickname"
+            placeholder="שם משתמש" ng-minlength="3" required>
+        <div class="col-md-5" ng-show="accountForm.nickname.$touched && accountForm.nickname.$invalid">
+            <div class="form-control alert alert-danger" role="alert">
+                שדה חובה. מינימום 3 תווים
+            </div>
+        </div>
+    </div>
+    <div class="form-group form-row">
+        <!-- validation: valid email -->
+        <label for="newemail" class="col-md-2">אי-מייל</label>
+        <input type="email" class="form-control col-md-5" name="newemail" ng-model="user.newemail" required
+            placeholder="כתובת מייל שנמצאת בשימוש">
+
+        <div class="col-md-5" ng-show="accountForm.newemail.$touched && accountForm.newemail.$invalid">
+            <div class="form-control alert alert-danger" role="alert">
+                שדה חובה. מייל תקין מכיל @
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group form-row">
+        <!-- validation pwd is equal to pwd2 -->
+        <label for="newpwd" class="col-md-2">סיסמה</label>
+        <input type="password" class="col-md-5 form-control" name="newpwd" ng-model="user.newpwd" ng-minlength="8"
+            ng-required="!isEditProfile" ng-disabled="isEditProfile">
+        <div class="col-md-5" ng-show="accountForm.newpwd.$touched && accountForm.newpwd.$invalid">
+            <div class="form-control alert alert-danger" role="alert">
+                    סיסמה לא תקינה
+            </div>
+        </div>
+
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-10">
+            <small id="emailHelp" class="form-text text-muted">דרישות מינימום לסיסמא תקינה: לפחות ספרה, אות קטנה ואות
+                גדולה (באנגלית). ולא פחות מ-8 תווים </small>
+        </div>
+    </div>
+    <div class="form-group form-row" ng-show="!isEditProfile">
+        <label for="newpwd2" class="col-md-2">אימות סיסמה</label>
+        <input type="password" class="form-control col-md-5" name="newpwd2" ng-model="newpwd2"
+        compare-to="isEditProfile ? newpwd2 : user.newpwd" ng-required="!isEditProfile">
+        <div class="col-md-5" ng-show="accountForm.newpwd2.$touched && accountForm.newpwd2.$invalid">
+                <div class="form-control alert alert-danger" role="alert">
+                       הססמאות לא תואמות
+                </div>
+            </div>        
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-10">
+            <small id="emailHelp" class="form-text text-muted">תוכן השדה יהיה זהה לתוכן שהוקלד עבור הסיסמה</small>
+        </div>
+    </div>
+    <div class="form-group form-row">
+        <label class="col-md-2">מתכונים שאני רוצה לראות</label>
+        <checkbox-list></checkbox-list>
+    </div>
+    <div class="form-group form-row">
+        <div class="float-left">
+        <button type="button" ng-click="addUser()" ng-hide="isEditProfile" ng-disabled="accountForm.$invalid" class="btn btn-primary">רישום</button>
+        <button type="button" ng-click="updateUser()" ng-show="isEditProfile" ng-disabled="accountForm.$invalid" class="btn btn-primary">עדכן פרטים</button>
+        </div>
+        <div class="float-left mx-2"  ng-show="accountForm.$invalid">
+            <div class="form-control alert alert-info" role="alert">
+                {{signupMsg}}
+            </div>
+        </div>
+        </div> 
+    <!-- <div class="form-group form-row"> -->
+</form>
